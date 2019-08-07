@@ -1,33 +1,27 @@
 import random
 import math
 
-change_choice = True
+def monty_hall(iterations, change_choice):
+  won = 0
+  lost = 0
+  for i in range(0, iterations):
+    doors = [1,2,3]
+    prize = random.choice(doors)
+    choice = random.choice(doors)
+    opened = random.choice(list(set(doors) - set([choice, prize])))
+    if change_choice:
+      choice = random.choice(list(set(doors) - set([opened, choice])))
+
+    if choice == prize:
+      won += 1
+    else:
+      lost += 1
+  
+  print("Win Percentage: {0}".format(won/iterations))
+    
+
+monty_hall(10000, True)
+monty_hall(10000, False)
 
 
-
-def monty_hall(iterations):
-    won = 0
-    lost = 0
-    for i in range(0, iterations):
-        car = random.randint(0,3)
-        firstChoice = random.randint(0, 3)
-        opened = random.randint(0,3)
-        while opened == car or opened == firstChoice:
-            opened = random.randint(0,3)
-        if change_choice:
-            tmp = firstChoice
-            while firstChoice == tmp or firstChoice == opened:
-                firstChoice = random.randint(0, 3)
-        if car == firstChoice:
-            won += 1
-        else:
-            lost += 1
-
-    print(won, lost)
-
-
-monty_hall(10000)
-
-change_choice = False
-monty_hall(10000)
 
